@@ -76,7 +76,7 @@ def getinstagram_data():
     create_database(instaname)
 
     print(data_list)
-    chromedriver = '/Users/clickontemp/Downloads/chromedriver'
+    chromedriver = '/Users/Username/Downloads/chromedriver'
     options = webdriver.ChromeOptions()
     options.add_argument('headless')  
     options.add_argument('window-size=1200x600')  
