@@ -21,7 +21,7 @@ def create_database(tblName="instatemplate"):
     cur = connection.cursor()
 
     try:
-        #Create a table in mysql???
+        #Create a table in mysql
         createsql = "CREATE TABLE %s ( \
           `post_id` int(11) DEFAULT NULL, \
           `url` varchar(255) DEFAULT NULL, \
@@ -38,9 +38,6 @@ def create_database(tblName="instatemplate"):
         code, msg = e.args
         if code == 1050:
             print(tblName, 'already exists')
-            dropsql = """DROP TABLE `instatemplate`"""
-            # cur.execute(dropsql)
-            # cur.execute(createsql)
         else:
             raise
 
@@ -73,19 +70,20 @@ def writedata(instaname, post_id=2,url='url',date_time='2018-05-08 18:37:43.000'
 
 def getinstagram_data():
     data_list = []
-    #numgrab = 35
     numgrab = int(input("Enter number of posts to scrape: "))
-    #link = "https://www.instagram.com/reebok/?hl=en"
     link = (input("Enter INSTAGRAM URL: "))
     instaname = link.split("/")[3]
-    #instaname = 'Birdseye'
     create_database(instaname)
 
     print(data_list)
-    driver = webdriver.Chrome(executable_path="/Users/clickontemp/Downloads/chromedriver")
+    chromedriver = '/Users/clickontemp/Downloads/chromedriver'
+    options = webdriver.ChromeOptions()
+    options.add_argument('headless')  
+    options.add_argument('window-size=1200x600')  
+    driver = webdriver.Chrome(executable_path=chromedriver, chrome_options=options)
 
     driver.get(link)
-
+    
     oldsource = driver.page_source
     oldsoup = soup(oldsource, "html.parser")
     fstring = oldsoup.body.script.text
@@ -167,14 +165,7 @@ def getinstagram_data():
 
 
 
-
-
-#create_database()
-#writedata()
 thedata = getinstagram_data()
-# for item in thedata:
-#     writedata(item[0],item[1],item[3],item[4],item[5])
-# print(thedata)
 
 
 
